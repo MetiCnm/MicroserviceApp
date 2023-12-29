@@ -1,0 +1,30 @@
+<div class="mw-100 w-75 p-4 m-5">
+  <h2>Notifications</h2>
+  <% if @notifications.any? %>
+    <table class="table table-striped mt-3">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col" class="w-50">Subject</th>
+          <th scope="col" class="w-50">Created At</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @notifications.each_with_index do |notification, index| %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= notification.subject %></td>
+          <td><%= time_ago_in_words(notification.created_at) %> ago</td>
+          <td>
+            <div class="d-flex">
+              <button type="button" class="btn btn-primary ms-1">Update</button>
+              <button type="button" class="btn btn-danger ms-1">Delete</button>
+            </div>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+    </table>
+  <% end %>
+</div>

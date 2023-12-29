@@ -1,0 +1,23 @@
+<div class="card mw-100 w-50 p-4 m-5">
+  <div class="card-body">
+    <h2 class="card-title">Sign Up</h2>
+    <%= form_tag notifications_path, :method => :post, :class => 'form card-text' do %>
+      <% if @notification.errors.any? %>
+        <div class="alert alert-danger">
+          <% @notification.errors.full_messages.each do |message| %>
+            <div><%= message %></div>
+          <% end %>
+        </div>
+      <% end %>
+      <div class="mb-3">
+        <%= label :notification, :subject, 'Subject', :class => 'form-label' %>
+        <%= text_field :notification, :subject, :class => 'form-control', placeholder: "Subject" %>
+      </div>
+      <div class="mb-3">
+        <%= label :notification, :body, 'Body', :class => 'form-label' %>
+        <%= text_area :notification, :body, :class => 'form-control', placeholder: "Body" %>
+      </div>
+      <%= submit_tag 'Create', :class => 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
