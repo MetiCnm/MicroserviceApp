@@ -8,7 +8,7 @@ class CreateUsers < ActiveRecord::Migration[7.1]
       t.string :national_identification_number
       t.date :date_of_birth
       t.string :phone_number
-      t.string :role
+      t.string :role, default: 'Individual'
       t.timestamps
     end
   end

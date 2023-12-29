@@ -11,6 +11,11 @@ Rails.application.routes.draw do
   # User routes
   resources :users, only:[:show, :update, :edit]
 
+  # Notification routs
+  resources :notifications
+  get '/main' => 'notifications#main'
+
+  # Authentication routes
   get '/login' => 'sessions#new'
   post '/login' =>'sessions#create'
   get '/signup' => 'registrations#new'

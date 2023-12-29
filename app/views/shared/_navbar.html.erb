@@ -9,6 +9,7 @@
         <%= button_to "Logout", logout_path, :method => "delete", :class => 'btn btn-danger' %>
       <% else %>
         <a class="navbar-brand text-white">Not logged in</a>
+        <%= button_to "Login", login_path, :method => "get", :class => 'btn btn-primary' %>
       <% end %>
     </div>
   </div>
