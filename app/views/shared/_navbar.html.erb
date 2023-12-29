@@ -1,0 +1,15 @@
+<nav class="navbar navbar-light bg-dark ">
+  <div class="container-fluid align-items-baseline">
+    <div class="brand_data">
+      <h5 class="navbar-brand text-white">Traffic Application</h5>
+    </div>
+    <div class="logged_data d-flex">
+      <% if current_user %>
+        <a class="navbar-brand text-white"><%= current_user.name.concat(" ").concat(current_user.surname) %></a>
+        <%= button_to "Logout", logout_path, :method => "delete", :class => 'btn btn-danger' %>
+      <% else %>
+        <a class="navbar-brand text-white">Not logged in</a>
+      <% end %>
+    </div>
+  </div>
+</nav>

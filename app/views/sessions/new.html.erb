@@ -1,0 +1,18 @@
+<div class="card mw-100 w-25 p-4 m-5 shadow d-flex align-items-center">
+  <div class="card-body mw-100 w-100">
+    <h2 class="card-title text-center">Login</h2>
+    <%= form_tag login_path, :method => :post, :class => 'form card-text' do %>
+      <div class="mb-3">
+        <%= label :email, 'Email', class: 'form-label' %>
+        <%= text_field :email, nil, class: 'form-control' %>
+      </div>
+      <div class="mb-3">
+        <%= label :password, 'Password', class: 'form-label' %>
+        <%= password_field :password, nil, class: 'form-control' %>
+      </div>
+      <div class="mb-3 text-center p-3 m-5">
+        <%= submit_tag 'Login', class: 'btn btn-primary text-center' %>
+      </div>
+    <% end %>
+  </div>
+</div>

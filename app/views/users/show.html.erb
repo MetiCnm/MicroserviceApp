@@ -1,0 +1,16 @@
+<div class="card mw-100 w-50 p-4 m-5">
+  <div class="card-body">
+    <h2 class="card-title">My Profile</h2>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><h5>Full Name: <small class="text-muted"><%= @user.name %> <%= @user.surname %></small></h5></li>
+    <li class="list-group-item"><h5>Email: <small class="text-muted"><%= @user.email %></small></h5></li>
+    <li class="list-group-item"><h5>Password: <small class="text-muted"><%= @user.password %></small></h5></li>
+    <li class="list-group-item"><h5>National Identification Number (NID): <small class="text-muted"><%= @user.national_identification_number %></small></h5></li>
+    <li class="list-group-item"><h5>Phone number: <small class="text-muted"><%= @user.phone_number %></small></h5></li>
+    <li class="list-group-item"><h5>Date of birth: <small class="text-muted"><%= @user.date_of_birth ? @user.date_of_birth.strftime('%F') : @user.date_of_birth %></small></h5></li>
+  </ul>
+  <div class="card-body">
+    <%= link_to 'Edit profile', edit_user_path(@user), :class => 'card-link btn btn-primary' %>
+  </div>
+</div>
