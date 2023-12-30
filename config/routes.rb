@@ -11,9 +11,13 @@ Rails.application.routes.draw do
   # User routes
   resources :users, only:[:show, :update, :edit]
 
-  # Notification routs
-  resources :notifications
+  # Notification routes
+  resources :notifications do
+    patch 'publish', on: :member
+  end
   get '/main' => 'notifications#main'
+
+
 
   # Authentication routes
   get '/login' => 'sessions#new'

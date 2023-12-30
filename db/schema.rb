@@ -30,7 +30,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_29_213627) do
     t.string "national_identification_number"
     t.date "date_of_birth"
     t.string "phone_number"
-    t.string "role"
+    t.string "role", default: "Individual"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

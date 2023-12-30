@@ -1,5 +1,6 @@
 class NotificationsController < ApplicationController
-  before_action :current_notification, only: [:show, :edit, :update, :destroy]
+  before_action :current_notification, only: [:show, :edit, :update, :destroy, :publish]
+  before_action :administrator_required, only: [:index, :edit, :new]
 
   def index
     @notifications = Notification.all
@@ -27,7 +28,7 @@ class NotificationsController < ApplicationController
   end
 
   def update
-    if @notification.update(notification_params)
+    if @current_notification.update(notification_params)
       flash[:notice] = "Notification updated successfully!"
       redirect_to notifications_path
     else
@@ -37,7 +38,7 @@ class NotificationsController < ApplicationController
   end
 
   def destroy
-    if @notification.destroy
+    if @current_notification.destroy
       flash[:notice] = "Notification deleted successfully!"
       redirect_to notifications_path
     else
@@ -46,12 +47,18 @@ class NotificationsController < ApplicationController
     end
   end
 
+  def publish
+    @current_notification.update_attribute(:published, true)
+    flash[:notice] = "Notification published successfully!"
+    redirect_to notifications_path
+  end
+
   def main
     @main_notifications = Notification.where(:published => true).order(created_at: :desc)
   end
 
   def notification_params
-    params.require(:notification).permit(:subject, :body, :published)
+    params.require(:current_notification).permit(:subject, :body)
   end
 
   def current_notification

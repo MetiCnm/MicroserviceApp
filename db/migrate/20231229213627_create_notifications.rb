@@ -3,7 +3,7 @@ class CreateNotifications < ActiveRecord::Migration[7.1]
     create_table :notifications do |t|
       t.string :subject, null: false
       t.string :body, null: false
-      t.boolean :published, default: true
+      t.boolean :published, default: false
       t.timestamps
     end
   end
