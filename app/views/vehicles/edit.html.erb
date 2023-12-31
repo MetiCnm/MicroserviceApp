@@ -1,0 +1,35 @@
+<div class="card mw-100 w-50 p-4 m-5">
+  <div class="card-body">
+    <h2 class="card-title">Edit Vehicle</h2>
+    <%= form_tag vehicle_path(@vehicle), :method => :put, :class => 'form card-text' do %>
+      <% if @vehicle.errors.any? %>
+        <div class="alert alert-danger">
+          <% @vehicle.errors.full_messages.each do |message| %>
+            <div><%= message %></div>
+          <% end %>
+        </div>
+      <% end %>
+      <div class="mb-3">
+        <%= label :vehicle, :plate_number, 'Plate Number', :class => 'form-label' %>
+        <%= text_field :vehicle, :plate_number, :class => 'form-control', placeholder: "AA000TR" %>
+      </div>
+      <div class="mb-3">
+        <%= label :vehicle, :vehicle_type, 'Type', :class => 'form-label' %>
+        <%= text_area :vehicle, :vehicle_type, :class => 'form-control', placeholder: "Sports car" %>
+      </div>
+      <div class="mb-3">
+        <%= label :vehicle, :make, 'Make', :class => 'form-label' %>
+        <%= text_area :vehicle, :make, :class => 'form-control', placeholder: "Ferrari" %>
+      </div>
+      <div class="mb-3 d-block w-100">
+        <%= label :vehicle, :production_year, 'Production Year', :class => 'form-label' %>
+        <%= select :vehicle, :production_year, (Date.today.year-50)..(Date.today.year+50), {}, { :class => 'form-control d-block w-100' }%>
+      </div>
+      <div class="mb-3 d-block w-100">
+        <%= label :vehicle, :user_id, 'User', :class => 'form-label' %>
+        <%= select :vehicle, :user_id, User.all.map{|user| [user.name + " " + user.surname, user.id]}, {}, { :class => 'form-control d-block w-100' }%>
+      </div>
+      <%= submit_tag 'Edit', :class => 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>

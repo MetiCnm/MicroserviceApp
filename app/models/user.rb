@@ -7,6 +7,7 @@ class User < ApplicationRecord
   validate :national_identification_number_check
   validate :phone_number_check
   validate :date_of_birth_check
+  has_many :vehicles
 
     def date_of_birth_check
       if date_of_birth.present? && date_of_birth > Date.today

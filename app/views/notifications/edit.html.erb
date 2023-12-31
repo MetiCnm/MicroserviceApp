@@ -1,21 +1,21 @@
 <div class="card mw-100 w-50 p-4 m-5">
   <div class="card-body">
     <h2 class="card-title">Edit Notification</h2>
-    <%= form_tag notification_path(@current_notification), :method => :put, :class => 'form card-text' do %>
-      <% if @current_notification.errors.any? %>
+    <%= form_tag notification_path(@notification), :method => :put, :class => 'form card-text' do %>
+      <% if @notification.errors.any? %>
         <div class="alert alert-danger">
-          <% @current_notification.errors.full_messages.each do |message| %>
+          <% @notification.errors.full_messages.each do |message| %>
             <div><%= message %></div>
           <% end %>
         </div>
       <% end %>
       <div class="mb-3">
-        <%= label :current_notification, :subject, 'Subject', :class => 'form-label' %>
-        <%= text_field :current_notification, :subject, :class => 'form-control' %>
+        <%= label :notification, :subject, 'Subject', :class => 'form-label' %>
+        <%= text_field :notification, :subject, :class => 'form-control' %>
       </div>
       <div class="mb-3">
-        <%= label :current_notification, :body, 'Body', :class => 'form-label' %>
-        <%= text_area :current_notification, :body, :class => 'form-control' %>
+        <%= label :notification, :body, 'Body', :class => 'form-label' %>
+        <%= text_area :notification, :body, :class => 'form-control' %>
       </div>
       <%= submit_tag 'Edit', :class => 'btn btn-primary' %>
     <% end %>

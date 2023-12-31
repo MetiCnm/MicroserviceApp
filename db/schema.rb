@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_29_213627) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_30_224429) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,6 +33,17 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_29_213627) do
     t.string "role", default: "Individual"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "vehicles", force: :cascade do |t|
+    t.string "plate_number", null: false
+    t.string "vehicle_type"
+    t.string "make"
+    t.integer "production_year"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_vehicles_on_user_id"
   end
 
 end

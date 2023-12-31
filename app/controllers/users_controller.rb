@@ -1,15 +1,16 @@
 class UsersController < ApplicationController
+  before_action :login_required
+  before_action :user, only: [:show, :edit, :update, :vehicles, :check_user]
+
   def show
-    id = params[:id]          # retrieve movie ID from URI route
-    @user = User.find(id)     # look up movie by unique ID
+    check_user
   end
 
   def edit
-    @user = User.find(params[:id])
+    check_user
   end
 
   def update
-    @user = User.find(params[:id])
     if @user.update(update_user_params)
       redirect_to user_path(@user), :notice => "User information has been updated."
     else
@@ -18,7 +19,25 @@ class UsersController < ApplicationController
     end
   end
 
+  def vehicles
+    if @user.id == current_user.id
+      @vehicles = @user.vehicles.all
+    else
+      redirect_to user_path(@user)
+    end
+  end
+
   def update_user_params
     params.require(:user).permit(:name, :surname, :email, :password, :national_identification_number, :phone_number, :date_of_birth)
+  end
+
+  def user
+    @user = User.find(params[:id])
+  end
+
+  def check_user
+    unless @user.id == current_user.id
+      redirect_to user_path(current_user)
+    end
   end
 end

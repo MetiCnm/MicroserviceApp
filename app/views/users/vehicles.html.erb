@@ -1,0 +1,27 @@
+<div class="mw-100 w-75 p-4 m-5">
+  <h2>My vehicles</h2>
+  <% if @vehicles.any? %>
+    <table class="table table-striped mt-3">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col" class="w-25">Plate number</th>
+        <th scope="col" class="w-25">Vehicle type</th>
+        <th scope="col" class="w-25">Make</th>
+        <th scope="col" class="w-25">Production year</th>
+      </tr>
+      </thead>
+      <tbody>
+    <% @vehicles.each_with_index do |vehicle, index| %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= vehicle.plate_number %></td>
+          <td><%= vehicle.vehicle_type %></td>
+          <td><%= vehicle.make %></td>
+          <td><%= vehicle.production_year %></td>
+        </tr>
+    <% end %>
+    </tbody>
+    </table>
+  <% end %>
+</div>
