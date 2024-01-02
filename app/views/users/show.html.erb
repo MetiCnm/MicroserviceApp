@@ -12,6 +12,7 @@
   </ul>
   <div class="card-body">
     <%= link_to 'Edit profile', edit_user_path(@user), :class => 'card-link btn btn-primary' %>
-    <%= link_to 'My vehicles', vehicles_user_path(@user), :class => 'card-link btn btn-info text-white' %>
+    <%= link_to 'My vehicles', vehicles_user_path(@user), :class => 'card-link btn btn-primary' %>
+    <%= link_to 'My fines', fines_user_path(@user), :class => 'card-link btn btn-primary' %>
   </div>
 </div>

@@ -1,0 +1,27 @@
+<div class="card mw-100 w-50 p-4 m-5">
+  <div class="card-body">
+    <h2 class="card-title">Pay</h2>
+    <%= form_tag payment_fine_path, :method => :post, :class => 'form card-text' do %>
+      <% if @payment.errors.any? %>
+        <div class="alert alert-danger">
+          <% @payment.errors.full_messages.each do |message| %>
+            <div><%= message %></div>
+          <% end %>
+        </div>
+      <% end %>
+      <div class="mb-3">
+        <%= label :payment, :credit_card_number, 'Credit Card Number', :class => 'form-label' %>
+        <%= text_field :payment, :credit_card_number, :maxlength => 16, :size => 16, :class => 'form-control', placeholder: "0000111122223333" %>
+      </div>
+      <div class="mb-3">
+        <%= label :payment, :expiration_date, 'Expiration Date', :class => 'form-label' %>
+        <%= text_field :payment, :expiration_date, :maxlength => 5, :size => 5, :class => 'form-control', placeholder: "12/30" %>
+      </div>
+      <div class="mb-3">
+        <%= label :payment, :card_verification_number, 'Card Verification Number', :class => 'form-label' %>
+        <%= text_field :payment, :card_verification_number, :maxlength => 3, :size => 3, :class => 'form-control', placeholder: "000"%>
+      </div>
+      <%= submit_tag 'Create', :class => 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>

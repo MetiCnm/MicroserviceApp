@@ -1,12 +1,30 @@
 class FinesController < ApplicationController
-  before_action :fine, only: [:show, :edit, :update, :destroy]
+  before_action :fine, only: [:show, :edit, :update, :destroy, :show_json, :show_xml]
   before_action :fine_vehicle, only: [:create, :update]
   before_action :administrator_required, only: [:index, :show, :edit, :new]
   def index
     @fines = Fine.all
   end
 
+  def index_json
+    @fines = Fine.all
+    render json: @fines
+  end
+
+  def index_xml
+    @fines = Fine.all
+    render xml: @fines
+  end
+
   def show
+  end
+
+  def show_json
+    render json: @fine
+  end
+
+  def show_xml
+    render xml: @fine
   end
 
   def new

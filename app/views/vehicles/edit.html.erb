@@ -19,11 +19,11 @@
       </div>
       <div class="mb-3">
         <%= label :vehicle, :make, 'Make', :class => 'form-label' %>
-        <%= text_area :vehicle, :make, :class => 'form-control', placeholder: "Ferrari" %>
+        <%= text_field :vehicle, :make, :class => 'form-control', placeholder: "Ferrari" %>
       </div>
       <div class="mb-3 d-block w-100">
         <%= label :vehicle, :production_year, 'Production Year', :class => 'form-label' %>
-        <%= select :vehicle, :production_year, (Date.today.year-50)..(Date.today.year+50), {}, { :class => 'form-control d-block w-100' }%>
+        <%= select :vehicle, :production_year, (Date.today.year-50)..(Date.today.year), {}, { :class => 'form-control d-block w-100' }%>
       </div>
       <div class="mb-3 d-block w-100">
         <%= label :vehicle, :user_id, 'User', :class => 'form-label' %>

@@ -1,12 +1,30 @@
 class NotificationsController < ApplicationController
-  before_action :notification, only: [:show, :edit, :update, :destroy, :publish]
+  before_action :notification, only: [:show, :edit, :update, :destroy, :publish, :show_json, :show_xml]
   before_action :administrator_required, only: [:index, :show, :edit, :new]
 
   def index
     @notifications = Notification.all
   end
 
+  def index_json
+    @notifications = Notification.all
+    render json: @notifications
+  end
+
+  def index_xml
+    @notifications = Notification.all
+    render xml: @notifications
+  end
+
   def show
+  end
+
+  def show_json
+    render json: @notification
+  end
+
+  def show_xml
+    render xml: @notification
   end
 
   def new

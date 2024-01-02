@@ -24,6 +24,10 @@ Rails.application.routes.draw do
   # Notification routes
   resources :notifications do
     patch 'publish', on: :member
+    get 'json', on: :member, to: 'notifications#show_json', defaults: {format: 'json'}
+    get 'json', on: :collection, to: 'notifications#index_json', defaults: {format: 'json'}
+    get 'xml', on: :member, to: 'notifications#show_xml', defaults: {format: 'xml'}
+    get 'xml', on: :collection, to: 'notifications#index_xml', defaults: {format: 'xml'}
   end
   get '/main' => 'notifications#main'
 
@@ -31,6 +35,14 @@ Rails.application.routes.draw do
   resources :vehicles
 
   # Fine routes
-  resources :fines
+  resources :fines do
+    get 'payment', on: :member, to: 'payments#new'
+    post 'payment', on: :member, to: 'payments#create'
+    post 'payment_json', on: :member, to: 'payments#create_json'
+    get 'json', on: :member, to: 'fines#show_json', defaults: {format: 'json'}
+    get 'json', on: :collection, to: 'fines#index_json', defaults: {format: 'json'}
+    get 'xml', on: :member, to: 'fines#show_xml', defaults: {format: 'xml'}
+    get 'xml', on: :collection, to: 'fines#index_xml', defaults: {format: 'xml'}
+  end
 
 end

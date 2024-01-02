@@ -1,15 +1,18 @@
 <div class="mw-100 w-75 p-4 m-5">
-  <h2>Manage Notifications</h2>
-  <% if @notifications.any? %>
-    <table class="table table-striped mt-3">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col" class="w-50">Subject</th>
-          <th scope="col" class="w-50">Created At</th>
-          <th scope="col">Actions</th>
-        </tr>
-      </thead>
+  <div class="d-flex align justify-content-between align-items-center">
+    <h2>Manage Notifications</h2>
+    <%= link_to 'Add Notification', new_notification_path, :class => 'card-link btn btn-success' %>
+  </div>
+  <table class="table table-striped mt-3">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col" class="w-50">Subject</th>
+      <th scope="col" class="w-50">Created At</th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <% if @notifications.any? %>
       <tbody>
       <% @notifications.each_with_index do |notification, index| %>
         <tr>
@@ -29,8 +32,8 @@
             </div>
           </td>
         </tr>
+      <% end %>
+      </tbody>
     <% end %>
-    </tbody>
-    </table>
-  <% end %>
+  </table>
 </div>

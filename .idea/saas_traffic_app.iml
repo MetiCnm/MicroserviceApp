@@ -36,6 +36,7 @@
     <orderEntry type="library" scope="PROVIDED" name="actionview (v7.1.2, ruby-3.3.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activejob (v7.1.2, ruby-3.3.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activemodel (v7.1.2, ruby-3.3.0-p0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="activemodel-serializers-xml (v1.0.2, ruby-3.3.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activerecord (v7.1.2, ruby-3.3.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activestorage (v7.1.2, ruby-3.3.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="activesupport (v7.1.2, ruby-3.3.0-p0) [gem]" level="application" />
