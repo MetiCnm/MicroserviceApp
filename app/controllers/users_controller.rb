@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :login_required
-  before_action :user, only: [:show, :edit, :update, :vehicles, :check_user]
+  before_action :user, only: [:show, :edit, :update, :vehicles, :fines, :check_user]
 
   def show
     check_user
@@ -22,6 +22,14 @@ class UsersController < ApplicationController
   def vehicles
     if @user.id == current_user.id
       @vehicles = @user.vehicles.all
+    else
+      redirect_to user_path(@user)
+    end
+  end
+
+  def fines
+    if @user.id == current_user.id
+      @fines = @user.fines.all
     else
       redirect_to user_path(@user)
     end

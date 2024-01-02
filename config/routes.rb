@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   # User routes
   resources :users, only:[:show, :update, :edit] do
     get 'vehicles', on: :member
+    get 'fines', on: :member
   end
 
   # Notification routes
@@ -28,5 +29,8 @@ Rails.application.routes.draw do
 
   # Vehicle routes
   resources :vehicles
+
+  # Fine routes
+  resources :fines
 
 end

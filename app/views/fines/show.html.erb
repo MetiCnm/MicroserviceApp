@@ -1,0 +1,19 @@
+<div class="card mw-100 w-50 p-4 m-5">
+  <div class="card-body">
+    <h2 class="card-title">Fine information</h2>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><h5>Plate Number: <small class="text-muted"><%= @fine.vehicle.plate_number %></small></h5></li>
+    <li class="list-group-item"><h5>Owner: <small class="text-muted"><%= @fine.user.name %> <%= @fine.user.surname %></small></h5></li>
+    <li class="list-group-item"><h5>Reason: <small class="text-muted"><%= @fine.reason %></small></h5></li>
+    <li class="list-group-item"><h5>Place: <small class="text-muted"><%= @fine.place %></small></h5></li>
+    <li class="list-group-item"><h5>Issue Time: <small class="text-muted"><%= @fine.issue_time.strftime("%d/%m/%Y %H:%M") %></small></h5></li>
+    <li class="list-group-item"><h5>Amount: <small class="text-muted"><%= sprintf('%.2f', @fine.amount) %></small></h5></li>
+    <li class="list-group-item"><h5>Payment Status: <small class="text-muted">
+      <% if @fine.payment_status %>
+        <span class="text-success">Paid</span>
+      <% else %>
+        <span class="text-danger">Not Paid</span>
+      <% end %></small></h5></li>
+  </ul>
+</div>

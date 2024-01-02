@@ -10,9 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_30_224429) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_01_225329) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "fines", force: :cascade do |t|
+    t.string "reason", null: false
+    t.string "place", null: false
+    t.datetime "issue_time", null: false
+    t.float "amount", null: false
+    t.boolean "payment_status", default: false
+    t.float "penalty_amount"
+    t.bigint "user_id"
+    t.bigint "vehicle_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_fines_on_user_id"
+    t.index ["vehicle_id"], name: "index_fines_on_vehicle_id"
+  end
 
   create_table "notifications", force: :cascade do |t|
     t.string "subject", null: false

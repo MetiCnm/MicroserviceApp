@@ -1,0 +1,37 @@
+<div class="mw-100 w-75 p-4 m-5">
+  <h2>My fines</h2>
+  <% if @fines.any? %>
+    <table class="table table-striped mt-3">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Plate number</th>
+        <th scope="col">Reason</th>
+        <th scope="col">Place</th>
+        <th scope="col">Issue Time</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Payment Status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @fines.each_with_index do |fine, index| %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= fine.vehicle.plate_number %></td>
+          <td><%= fine.reason %></td>
+          <td><%= fine.place %></td>
+          <td><%= fine.issue_time.strftime("%d/%m/%Y %H:%M") %></td>
+          <td><%= sprintf('%.2f', fine.amount) %></td>
+          <td>
+            <% if fine.payment_status %>
+              <span class="text-success">Paid</span>
+            <% else %>
+              <span class="text-danger">Not Paid</span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

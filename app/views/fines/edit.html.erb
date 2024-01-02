@@ -1,0 +1,35 @@
+<div class="card mw-100 w-50 p-4 m-5">
+  <div class="card-body">
+    <h2 class="card-title">Edit Fine</h2>
+    <%= form_tag fine_path(@fine), :method => :put, :class => 'form card-text' do %>
+      <% if @fine.errors.any? %>
+        <div class="alert alert-danger">
+          <% @fine.errors.full_messages.each do |message| %>
+            <div><%= message %></div>
+          <% end %>
+        </div>
+      <% end %>
+      <div class="mb-3">
+        <%= label :fine, :reason, 'Reason', :class => 'form-label' %>
+        <%= text_field :fine, :reason, :class => 'form-control', placeholder: "Driving over speed limit" %>
+      </div>
+      <div class="mb-3">
+        <%= label :fine, :place, 'Place', :class => 'form-label' %>
+        <%= text_field :fine, :place, :class => 'form-control', placeholder: "Tirane" %>
+      </div>
+      <div class="mb-3">
+        <%= label :fine, :issue_time, 'Issue Time', :class => 'form-label' %>
+        <%= datetime_select :fine, :issue_time, :class => 'form-control'%>
+      </div>
+      <div class="mb-3">
+        <%= label :fine, :amount, 'Amount', :class => 'form-label' %>
+        <%= text_field :fine, :amount, :class => 'form-control'%>
+      </div>
+      <div class="mb-3 d-block w-100">
+        <%= label :fine, :vehicle_id, 'Vehicle', :class => 'form-label' %>
+        <%= select :fine, :vehicle_id, Vehicle.all.map{|vehicle| [vehicle.plate_number + " - " + vehicle.user.name + " " + vehicle.user.surname, vehicle.id]}, {}, { :class => 'form-control d-block w-100' }%>
+      </div>
+      <%= submit_tag 'Edit', :class => 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
