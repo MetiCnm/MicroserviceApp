@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # exit on error
+# Test
 set -o errexit
 
 bundle install
