@@ -1,5 +1,5 @@
 <div class="mw-100 w-75 p-4 m-5">
-  <%= render partial: "shared/header_index", locals: { type: 'Vehicle', path: new_vehicle_path }, formats: [:html]%>
+  <%= render partial: "header_index.html.erb", locals: { type: 'Vehicle', path: new_vehicle_path }, formats: :html%>
   <table class="table table-striped mt-3">
     <thead>
     <tr>
@@ -24,10 +24,10 @@
           <td><%= vehicle.production_year %></td>
           <td>
             <div class="d-flex align-items-end">
-              <%= render partial: "shared/crud_buttons",
+              <%= render partial: "crud_buttons.html.erb",
                          locals: { crud_view_path: vehicle_path(vehicle),
                                   crud_edit_path: edit_vehicle_path(vehicle),
-                                  crud_delete_path: vehicle_path(vehicle) }, formats: [:html]%>
+                                  crud_delete_path: vehicle_path(vehicle) }, formats: :html%>
             </div>
           </td>
         </tr>

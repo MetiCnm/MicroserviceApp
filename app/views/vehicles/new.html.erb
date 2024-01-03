@@ -2,7 +2,7 @@
   <div class="card-body">
     <h2 class="card-title">New Vehicle</h2>
     <%= form_tag vehicles_path, :method => :post, :class => 'form card-text' do %>
-      <%= render partial: "shared/message", locals: { object: @vehicle }, formats: [:html]%>
+      <%= render partial: "message.html.erb", locals: { object: @vehicle }, formats: :html%>
       <div class="mb-3">
         <%= label :vehicle, :plate_number, 'Plate Number', :class => 'form-label' %>
         <%= text_field :vehicle, :plate_number, :class => 'form-control', placeholder: "AA000TR" %>

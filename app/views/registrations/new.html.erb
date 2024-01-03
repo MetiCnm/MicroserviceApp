@@ -2,7 +2,7 @@
   <div class="card-body">
     <h2 class="card-title">Sign Up</h2>
     <%= form_tag signup_path, :method => :post, :class => 'form card-text' do %>
-      <%= render partial: "shared/message", locals: { object: @user }, formats: [:html]%>
+      <%= render partial: "message.html.erb", locals: { object: @user }, formats: :html%>
       <div class="mb-3">
         <%= label :user, :name, 'Name', :class => 'form-label' %>
         <%= text_field :user, :name, :class => 'form-control', placeholder: "John" %>
