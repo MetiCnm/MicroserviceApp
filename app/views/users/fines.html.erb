@@ -1,18 +1,18 @@
 <div class="mw-100 w-75 p-4 m-5">
-  <h2>My fines</h2>
-  <% if @fines.any? %>
-    <table class="table table-striped mt-3">
-      <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Plate number</th>
-        <th scope="col">Reason</th>
-        <th scope="col">Place</th>
-        <th scope="col">Issue Time</th>
-        <th scope="col">Amount</th>
-        <th scope="col">Payment Status</th>
-      </tr>
-      </thead>
+  <h2>My Fines</h2>
+  <table class="table table-striped mt-3">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Plate number</th>
+      <th scope="col">Reason</th>
+      <th scope="col">Place</th>
+      <th scope="col">Issue Time</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Payment Status</th>
+    </tr>
+    </thead>
+    <% if @fines.any? %>
       <tbody>
       <% @fines.each_with_index do |fine, index| %>
         <tr>
@@ -32,6 +32,6 @@
         </tr>
       <% end %>
       </tbody>
-    </table>
-  <% end %>
+    <% end %>
+  </table>
 </div>

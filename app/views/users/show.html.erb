@@ -8,7 +8,7 @@
     <li class="list-group-item"><h5>Password: <small class="text-muted"><%= @user.password %></small></h5></li>
     <li class="list-group-item"><h5>National Identification Number (NID): <small class="text-muted"><%= @user.national_identification_number %></small></h5></li>
     <li class="list-group-item"><h5>Phone number: <small class="text-muted"><%= @user.phone_number %></small></h5></li>
-    <li class="list-group-item"><h5>Date of birth: <small class="text-muted"><%= @user.date_of_birth ? @user.date_of_birth.strftime('%F') : @user.date_of_birth %></small></h5></li>
+    <li class="list-group-item"><h5>Date of birth: <small class="text-muted"><%= @user.date_of_birth ? @user.date_of_birth.strftime("%d/%m/%Y") : @user.date_of_birth %></small></h5></li>
   </ul>
   <div class="card-body">
     <%= link_to 'Edit profile', edit_user_path(@user), :class => 'card-link btn btn-primary' %>

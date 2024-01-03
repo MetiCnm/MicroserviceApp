@@ -1,8 +1,5 @@
 <div class="mw-100 w-75 p-4 m-5">
-  <div class="d-flex align justify-content-between align-items-center">
-    <h2>Manage Vehicle</h2>
-    <%= link_to 'Add Vehicle', new_vehicle_path, :class => 'card-link btn btn-success' %>
-  </div>
+  <%= render partial: "shared/header_index", locals: { type: 'Vehicle', path: new_vehicle_path}%>
   <table class="table table-striped mt-3">
     <thead>
     <tr>
@@ -27,9 +24,10 @@
           <td><%= vehicle.production_year %></td>
           <td>
             <div class="d-flex align-items-end">
-              <%= button_to "View", vehicle_path(vehicle), method: :get, :class => 'btn btn-info text-white ms-2' %>
-              <%= button_to "Edit", edit_vehicle_path(vehicle), method: :get, :class => 'btn btn-primary ms-2' %>
-              <%= button_to "Delete", vehicle_path(vehicle), method: :delete, :class => 'btn btn-danger ms-2' %>
+              <%= render partial: "shared/crud_buttons",
+                         locals: {crud_view_path: vehicle_path(vehicle),
+                                  crud_edit_path: edit_vehicle_path(vehicle),
+                                  crud_delete_path: vehicle_path(vehicle)}%>
             </div>
           </td>
         </tr>

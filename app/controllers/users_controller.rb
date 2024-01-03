@@ -3,10 +3,12 @@ class UsersController < ApplicationController
   before_action :user, only: [:show, :edit, :update, :vehicles, :fines, :check_user]
 
   def show
+    @title = "Show User"
     check_user
   end
 
   def edit
+    @title = "Edit User"
     check_user
   end
 
@@ -20,6 +22,7 @@ class UsersController < ApplicationController
   end
 
   def vehicles
+    @title = "My Vehicles"
     if @user.id == current_user.id
       @vehicles = @user.vehicles.all
     else
@@ -28,6 +31,7 @@ class UsersController < ApplicationController
   end
 
   def fines
+    @title = "My Fines"
     if @user.id == current_user.id
       @fines = @user.fines.all
     else

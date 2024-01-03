@@ -2,6 +2,7 @@ class PaymentsController < ApplicationController
   before_action :fine, only: [:new, :create, :penalty_check, :create_json]
   skip_before_action :verify_authenticity_token, only: [:create_json]
   def new
+    @title = "Pay Fine"
     if @fine.payment_status
       redirect_to fines_path
     else

@@ -17,10 +17,10 @@ class ApplicationController < ActionController::Base
     if logged_in?
       @current_user = current_user
       unless @current_user.role == 'Administrator'
-        redirect_to main_path
+        redirect_to root_path
       end
     else
-      redirect_to main_path
+      redirect_to root_path
     end
   end
 

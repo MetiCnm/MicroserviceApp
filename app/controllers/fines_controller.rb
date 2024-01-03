@@ -2,7 +2,9 @@ class FinesController < ApplicationController
   before_action :fine, only: [:show, :edit, :update, :destroy, :show_json, :show_xml]
   before_action :fine_vehicle, only: [:create, :update]
   before_action :administrator_required, only: [:index, :show, :edit, :new]
+
   def index
+    @title = "Fines List"
     @fines = Fine.all
   end
 
@@ -17,6 +19,7 @@ class FinesController < ApplicationController
   end
 
   def show
+    @title = "Show Fine"
   end
 
   def show_json
@@ -28,6 +31,7 @@ class FinesController < ApplicationController
   end
 
   def new
+    @title = "New Fine"
     @fine = Fine.new
   end
 
@@ -36,35 +40,36 @@ class FinesController < ApplicationController
     @fine.vehicle = @vehicle
     @fine.user = @vehicle.user
     if @fine.save
-      flash[:notice] = "Fine added successfully"
+      flash[:notice] = "Fine added successfully!"
       redirect_to fines_path
     else
-      flash[:error] = "Fine could not be added"
+      flash[:error] = "Fine could not be added!"
       render :new
     end
   end
 
   def edit
+    @title = "Edit Fine"
     @fine.amount = sprintf('%.2f', @fine.amount)
   end
 
   def update
     if @fine.update(fine_params)
-      flash[:notice] = "Fine updated successfully"
+      flash[:notice] = "Fine updated successfully!"
       redirect_to fines_path
     else
-      flash[:error] = "Fine could not be updated"
+      flash[:error] = "Fine could not be updated!"
       render :edit
     end
   end
 
   def destroy
     if @fine.destroy
-      flash[:notice] = "Fine deleted successfully"
+      flash[:notice] = "Fine deleted successfully!"
       redirect_to fines_path
     else
-      flash[:error] = "Fine could not be deleted"
-      render :destroy
+      flash[:error] = "Fine could not be deleted!"
+      render :index
     end
   end
 

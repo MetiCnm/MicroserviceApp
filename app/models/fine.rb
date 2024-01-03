@@ -9,9 +9,8 @@ class Fine < ApplicationRecord
   has_one :payment
 
   def issue_time_cannot_be_in_the_future
-    if issue_time.present? && issue_time > Date.today
+    if issue_time.present? && issue_time > DateTime.current
       errors.add(:issue_time, "cannot be in the future")
     end
   end
-
 end

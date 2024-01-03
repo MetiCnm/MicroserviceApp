@@ -2,13 +2,7 @@
   <div class="card-body">
     <h2 class="card-title">Edit Notification</h2>
     <%= form_tag notification_path(@notification), :method => :put, :class => 'form card-text' do %>
-      <% if @notification.errors.any? %>
-        <div class="alert alert-danger">
-          <% @notification.errors.full_messages.each do |message| %>
-            <div><%= message %></div>
-          <% end %>
-        </div>
-      <% end %>
+      <%= render partial: "shared/message", locals: { object: @notification}%>
       <div class="mb-3">
         <%= label :notification, :subject, 'Subject', :class => 'form-label' %>
         <%= text_field :notification, :subject, :class => 'form-control' %>

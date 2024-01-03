@@ -1,8 +1,5 @@
 <div class="mw-100 w-75 p-4 m-5">
-  <div class="d-flex align justify-content-between align-items-center">
-    <h2>Manage Notifications</h2>
-    <%= link_to 'Add Notification', new_notification_path, :class => 'card-link btn btn-success' %>
-  </div>
+  <%= render partial: "shared/header_index", locals: { type: 'Notification', path: new_notification_path}%>
   <table class="table table-striped mt-3">
     <thead>
     <tr>
@@ -21,9 +18,10 @@
           <td><%= time_ago_in_words(notification.created_at) %> ago</td>
           <td>
             <div class="d-flex align-items-end">
-              <%= button_to "View", notification_path(notification), method: :get, :class => 'btn btn-info text-white ms-2' %>
-              <%= button_to "Edit", edit_notification_path(notification), method: :get, :class => 'btn btn-primary ms-2' %>
-              <%= button_to "Delete", notification_path(notification), method: :delete, :class => 'btn btn-danger ms-2' %>
+              <%= render partial: "shared/crud_buttons",
+                         locals: {crud_view_path: notification_path(notification),
+                                  crud_edit_path: edit_notification_path(notification),
+                                  crud_delete_path: notification_path(notification)}%>
               <% if notification.published %>
                 <h6 class="text-success ms-2">Published</h6>
               <% else %>

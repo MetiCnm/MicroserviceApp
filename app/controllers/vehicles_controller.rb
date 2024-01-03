@@ -3,13 +3,16 @@ class VehiclesController < ApplicationController
   before_action :vehicle_user, only: [:create, :update]
   before_action :administrator_required, only: [:index, :show, :edit, :new]
   def index
+    @title = "Vehicles List"
     @vehicles = Vehicle.all
   end
 
   def show
+    @title = "Show Vehicle"
   end
 
   def new
+    @title = "New Vehicle"
     @vehicle = Vehicle.new
   end
 
@@ -26,6 +29,7 @@ class VehiclesController < ApplicationController
   end
 
   def edit
+    @title = "Edit Vehicle"
   end
 
   def update

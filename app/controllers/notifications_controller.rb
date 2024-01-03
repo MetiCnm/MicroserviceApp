@@ -1,8 +1,10 @@
 class NotificationsController < ApplicationController
+  before_action :administrator_required, only: [:index, :show, :edit, :new]
   before_action :notification, only: [:show, :edit, :update, :destroy, :publish, :show_json, :show_xml]
   before_action :administrator_required, only: [:index, :show, :edit, :new]
 
   def index
+    @title = "Notifications List"
     @notifications = Notification.all
   end
 
@@ -17,6 +19,7 @@ class NotificationsController < ApplicationController
   end
 
   def show
+    @title = "Show Notification"
   end
 
   def show_json
@@ -28,6 +31,7 @@ class NotificationsController < ApplicationController
   end
 
   def new
+    @title = "New Notification"
     @notification = Notification.new
   end
 
@@ -37,12 +41,13 @@ class NotificationsController < ApplicationController
       flash[:notice] = "Notification added successfully!"
       redirect_to notifications_path
     else
-      flash[:error] = "Notification could not be added"
+      flash[:error] = "Notification could not be added!"
       render :new
     end
   end
 
   def edit
+    @title = "Edit Notification"
   end
 
   def update
@@ -50,7 +55,7 @@ class NotificationsController < ApplicationController
       flash[:notice] = "Notification updated successfully!"
       redirect_to notifications_path
     else
-      flash[:error] = "Notification could not be updated"
+      flash[:error] = "Notification could not be updated!"
       render :edit
     end
   end
@@ -60,7 +65,7 @@ class NotificationsController < ApplicationController
       flash[:notice] = "Notification deleted successfully!"
       redirect_to notifications_path
     else
-      flash[:error] = "Notification could not be deleted"
+      flash[:error] = "Notification could not be deleted!"
       render :destroy
     end
   end
@@ -72,6 +77,7 @@ class NotificationsController < ApplicationController
   end
 
   def main
+    @title = "Main Page"
     @main_notifications = Notification.where(:published => true).order(created_at: :desc)
   end
 

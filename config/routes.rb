@@ -5,9 +5,9 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Defines the root path route ("/")
-  # root "posts#index"
-  #
+  # Root route
+  root 'notifications#main'
+
   # Authentication routes
   get '/login' => 'sessions#new'
   post '/login' =>'sessions#create'
@@ -29,7 +29,6 @@ Rails.application.routes.draw do
     get 'xml', on: :member, to: 'notifications#show_xml', defaults: {format: 'xml'}
     get 'xml', on: :collection, to: 'notifications#index_xml', defaults: {format: 'xml'}
   end
-  get '/main' => 'notifications#main'
 
   # Vehicle routes
   resources :vehicles

@@ -2,13 +2,7 @@
   <div class="card-body">
     <h2 class="card-title">Edit User</h2>
     <%= form_tag user_path(@user), :method => :put, :class => 'form card-text' do %>
-      <% if @user.errors.any? %>
-        <div class="alert alert-danger">
-          <% @user.errors.full_messages.each do |message| %>
-            <div><%= message %></div>
-          <% end %>
-        </div>
-      <% end %>
+      <%= render partial: "shared/message", locals: { object: @user}%>
       <div class="mb-3">
         <%= label :user, :name, 'Name', :class => 'form-label' %>
         <%= text_field :user, :name, :class => 'form-control' %>
