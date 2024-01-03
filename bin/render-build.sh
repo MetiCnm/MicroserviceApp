@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # exit on error
+# Render Script
 set -o errexit
 
 bundle install
