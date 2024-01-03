@@ -1,5 +1,5 @@
 <div class="mw-100 w-75 p-4 m-5">
-  <%= render partial: "shared/header_index", locals: { type: 'Notification', path: new_notification_path}%>
+  <%= render partial: "shared/header_index", locals: { type: 'Notification', path: new_notification_path }, formats: [:html]%>
   <table class="table table-striped mt-3">
     <thead>
     <tr>
@@ -19,9 +19,9 @@
           <td>
             <div class="d-flex align-items-end">
               <%= render partial: "shared/crud_buttons",
-                         locals: {crud_view_path: notification_path(notification),
+                         locals: { crud_view_path: notification_path(notification),
                                   crud_edit_path: edit_notification_path(notification),
-                                  crud_delete_path: notification_path(notification)}%>
+                                  crud_delete_path: notification_path(notification) }, formats: [:html]%>
               <% if notification.published %>
                 <h6 class="text-success ms-2">Published</h6>
               <% else %>

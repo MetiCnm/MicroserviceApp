@@ -2,7 +2,7 @@
   <div class="card-body">
     <h2 class="card-title">New Notification</h2>
     <%= form_tag notifications_path, :method => :post, :class => 'form card-text' do %>
-      <%= render partial: "shared/message", locals: { object: @notification}%>
+      <%= render partial: "shared/message", locals: { object: @notification }, formats: [:html]%>
       <div class="mb-3">
         <%= label :notification, :subject, 'Subject', :class => 'form-label' %>
         <%= text_field :notification, :subject, :class => 'form-control', placeholder: "Subject" %>

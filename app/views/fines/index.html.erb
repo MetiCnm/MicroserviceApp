@@ -1,5 +1,5 @@
 <div class="mw-100 w-75 p-4 m-5">
-  <%= render partial: "shared/header_index", locals: { type: 'Fine', path: new_fine_path}%>
+  <%= render partial: "shared/header_index", locals: { type: 'Fine', path: new_fine_path }, formats: [:html]%>
   <table class="table table-striped mt-3">
     <thead>
     <tr>
@@ -37,7 +37,7 @@
               <%= render partial: "shared/crud_buttons",
                          locals: {crud_view_path: fine_path(fine),
                                   crud_edit_path: edit_fine_path(fine),
-                                  crud_delete_path: fine_path(fine)}%>
+                                  crud_delete_path: fine_path(fine)}, formats: [:html]%>
             </div>
           </td>
         </tr>

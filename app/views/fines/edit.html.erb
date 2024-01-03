@@ -2,7 +2,7 @@
   <div class="card-body">
     <h2 class="card-title">Edit Fine</h2>
     <%= form_tag fine_path(@fine), :method => :put, :class => 'form card-text' do %>
-      <%= render partial: "shared/message", locals: { object: @fine}%>
+      <%= render partial: "shared/message", locals: { object: @fine }, formats: [:html]%>
       <div class="mb-3">
         <%= label :fine, :reason, 'Reason', :class => 'form-label' %>
         <%= text_field :fine, :reason, :class => 'form-control', placeholder: "Driving over speed limit" %>
