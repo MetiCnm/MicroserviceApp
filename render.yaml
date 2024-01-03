@@ -1,0 +1,23 @@
+databases:
+  - name: saas_traffic_app_production
+    databaseName: saas_traffic_app_production
+    user: saas_traffic_app_production_user
+    plan: free
+
+services:
+  - type: web
+    name: saas_traffic_app_production
+    runtime: ruby
+    plan: free
+    buildCommand: "./bin/render-build.sh"
+    # preDeployCommand: "./bin/rails db:migrate" # preDeployCommand only available on paid instance types
+    startCommand: "./bin/rails server"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: saas_traffic_app_production
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: WEB_CONCURRENCY
+        value: 2 # sensible default
