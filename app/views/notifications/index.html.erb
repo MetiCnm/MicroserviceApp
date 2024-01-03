@@ -1,5 +1,5 @@
 <div class="mw-100 w-75 p-4 m-5">
-  <%= render partial: "header_index.html.erb", locals: { type: 'Notification', path: new_notification_path }, formats: :html%>
+  <%= render partial: "shared/header_index", locals: { type: 'Notification', path: new_notification_path } %>
   <table class="table table-striped mt-3">
     <thead>
     <tr>
@@ -18,10 +18,10 @@
           <td><%= time_ago_in_words(notification.created_at) %> ago</td>
           <td>
             <div class="d-flex align-items-end">
-              <%= render partial: "crud_buttons.html.erb",
+              <%= render partial: "shared/crud_buttons",
                          locals: { crud_view_path: notification_path(notification),
                                   crud_edit_path: edit_notification_path(notification),
-                                  crud_delete_path: notification_path(notification) }, formats: :html%>
+                                  crud_delete_path: notification_path(notification) } %>
               <% if notification.published %>
                 <h6 class="text-success ms-2">Published</h6>
               <% else %>
