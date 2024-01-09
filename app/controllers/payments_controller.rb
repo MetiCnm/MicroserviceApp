@@ -18,15 +18,14 @@ class PaymentsController < ApplicationController
     else
       @payment = Payment.new(payment_params)
       @payment.fine = @fine
-      penalty_check
-      if @payment.save
+      if @payment.valid?
+        penalty_check
+        @payment.save
         render json: {
           success: "Payment added successfully!"
         }
       else
-        render json: {
-          success: "Payment could not be added!"
-        }
+        render json: { error: "Validation failed for payment", messages: @payment.errors.full_messages }
       end
     end
   end
@@ -37,8 +36,9 @@ class PaymentsController < ApplicationController
     else
       @payment = Payment.new(payment_params)
       @payment.fine = @fine
-      penalty_check
-      if @payment.save
+      if @payment.valid?
+        penalty_check
+        @payment.save
         flash[:notice] = "Payment added successfully!"
         redirect_to fines_path
       else
