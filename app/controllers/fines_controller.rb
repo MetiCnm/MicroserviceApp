@@ -31,8 +31,14 @@ class FinesController < ApplicationController
   end
 
   def new
-    @title = "New Fine"
-    @fine = Fine.new
+    vehicle_count = Vehicle.all.count
+    if vehicle_count == 0
+      flash[:alert] = "Cannot add a fine without a vehicle!"
+      redirect_to vehicles_path
+    else
+      @title = "New Fine"
+      @fine = Fine.new
+    end
   end
 
   def create
