@@ -19,7 +19,9 @@
         <%= label :user, :password, 'Password', :class => 'form-label' %>
         <%= password_field :user, :password, :class => 'form-control', placeholder: "password" %>
       </div>
-      <%= submit_tag 'Register', :class => 'btn btn-primary' %>
+      <div class="d-flex justify-content-center">
+        <%= submit_tag 'Register', :class => 'btn btn-primary' %>
+      </div>
     <% end %>
   </div>
 </div>

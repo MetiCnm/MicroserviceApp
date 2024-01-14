@@ -23,7 +23,9 @@
         <%= label :fine, :vehicle_id, 'Vehicle', :class => 'form-label' %>
         <%= select :fine, :vehicle_id, Vehicle.all.map{|vehicle| [vehicle.plate_number + " - " + vehicle.user.name + " " + vehicle.user.surname, vehicle.id]}, {}, { :class => 'form-control d-block w-100' }%>
       </div>
-      <%= submit_tag 'Create', :class => 'btn btn-primary' %>
+      <div class="d-flex justify-content-center">
+        <%= submit_tag 'Add', :class => 'btn btn-primary' %>
+      </div>
     <% end %>
   </div>
 </div>

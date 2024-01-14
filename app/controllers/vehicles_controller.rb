@@ -49,7 +49,7 @@ class VehiclesController < ApplicationController
       redirect_to vehicles_path
     else
       flash[:error] = "Vehicle could not be deleted"
-      render :destroy
+      render :index
     end
   end
 

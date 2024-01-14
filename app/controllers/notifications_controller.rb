@@ -1,33 +1,32 @@
 class NotificationsController < ApplicationController
   before_action :administrator_required, only: [:index, :show, :edit, :new]
-  before_action :notification, only: [:show, :edit, :update, :destroy, :publish, :show_json, :show_xml]
-  before_action :administrator_required, only: [:index, :show, :edit, :new]
+  before_action :notification, only: [:show, :edit, :update, :destroy, :publish]
 
   def index
     @title = "Notifications List"
     @notifications = Notification.all
-  end
-
-  def index_json
-    @notifications = Notification.all
-    render json: @notifications
-  end
-
-  def index_xml
-    @notifications = Notification.all
-    render xml: @notifications
+    respond_to do |format|
+      format.html { }
+      format.json {
+        render json: @notifications
+      }
+      format.xml {
+        render xml: @notifications
+      }
+    end
   end
 
   def show
     @title = "Show Notification"
-  end
-
-  def show_json
-    render json: @notification
-  end
-
-  def show_xml
-    render xml: @notification
+    respond_to do |format|
+      format.html { }
+      format.json {
+        render json: @notification
+      }
+      format.xml {
+        render xml: @notification
+      }
+    end
   end
 
   def new
@@ -66,7 +65,7 @@ class NotificationsController < ApplicationController
       redirect_to notifications_path
     else
       flash[:error] = "Notification could not be deleted!"
-      render :destroy
+      render :index
     end
   end
 

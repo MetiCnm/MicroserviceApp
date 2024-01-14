@@ -1,6 +1,6 @@
 <div class="card mw-100 w-50 p-4 m-5">
   <div class="card-body">
-    <h2 class="card-title">Pay</h2>
+    <h2 class="card-title">Pay Fine</h2>
     <%= form_tag payment_fine_path, :method => :post, :class => 'form card-text' do %>
       <%= render partial: "shared/message", locals: { object: @payment } %>
       <div class="mb-3">
@@ -15,7 +15,9 @@
         <%= label :payment, :card_verification_number, 'Card Verification Number', :class => 'form-label' %>
         <%= text_field :payment, :card_verification_number, :maxlength => 3, :size => 3, :class => 'form-control', placeholder: "000"%>
       </div>
-      <%= submit_tag 'Create', :class => 'btn btn-primary' %>
+      <div class="d-flex justify-content-center">
+        <%= submit_tag 'Pay', :class => 'btn btn-primary' %>
+      </div>
     <% end %>
   </div>
 </div>

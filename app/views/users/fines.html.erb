@@ -24,9 +24,9 @@
           <td><%= sprintf('%.2f', fine.amount + (fine.penalty_amount ? fine.penalty_amount : 0.00)) %></td>
           <td>
             <% if fine.payment_status %>
-              <span class="text-success">Paid</span>
+              <span class="text-success ms-2">Paid</span>
             <% else %>
-              <%= button_to "Pay", payment_fine_path(fine), method: :get, :class => 'btn btn-success ms-2' %>
+              <%= button_to "Pay", payment_fine_path(fine), method: :get, :class => 'btn btn-success' %>
             <% end %>
           </td>
         </tr>

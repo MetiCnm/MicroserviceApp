@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  get "up" => "rails/health#show", as: :rails_health_checks
 
   # Root route
   root 'notifications#main'
@@ -24,10 +24,6 @@ Rails.application.routes.draw do
   # Notification routes
   resources :notifications do
     patch 'publish', on: :member
-    get 'json', on: :member, to: 'notifications#show_json', defaults: {format: 'json'}
-    get 'json', on: :collection, to: 'notifications#index_json', defaults: {format: 'json'}
-    get 'xml', on: :member, to: 'notifications#show_xml', defaults: {format: 'xml'}
-    get 'xml', on: :collection, to: 'notifications#index_xml', defaults: {format: 'xml'}
   end
 
   # Vehicle routes
@@ -36,12 +32,7 @@ Rails.application.routes.draw do
   # Fine routes
   resources :fines do
     get 'payment', on: :member, to: 'payments#new'
-    post 'payment', on: :member, to: 'payments#create'
-    post 'payment_json', on: :member, to: 'payments#create_json'
-    get 'json', on: :member, to: 'fines#show_json', defaults: {format: 'json'}
-    get 'json', on: :collection, to: 'fines#index_json', defaults: {format: 'json'}
-    get 'xml', on: :member, to: 'fines#show_xml', defaults: {format: 'xml'}
-    get 'xml', on: :collection, to: 'fines#index_xml', defaults: {format: 'xml'}
+    post 'payment', on: :member, to: 'payments#pay'
   end
 
 end

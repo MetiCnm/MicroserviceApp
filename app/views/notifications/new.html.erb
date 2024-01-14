@@ -11,7 +11,9 @@
         <%= label :notification, :body, 'Body', :class => 'form-label' %>
         <%= text_area :notification, :body, :class => 'form-control', placeholder: "Body" %>
       </div>
-      <%= submit_tag 'Create', :class => 'btn btn-primary' %>
+      <div class="d-flex justify-content-center">
+        <%= submit_tag 'Add', :class => 'btn btn-primary' %>
+      </div>
     <% end %>
   </div>
 </div>

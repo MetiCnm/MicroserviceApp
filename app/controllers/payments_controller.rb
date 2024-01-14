@@ -1,50 +1,13 @@
 class PaymentsController < ApplicationController
-  before_action :fine, only: [:new, :create, :penalty_check, :create_json]
-  skip_before_action :verify_authenticity_token, only: [:create_json]
+  before_action :fine, only: [:new, :penalty_check, :pay]
+  before_action :individual_required, only: [:new, :pay]
+  skip_before_action :verify_authenticity_token, only: [:pay]
   def new
     @title = "Pay Fine"
     if @fine.payment_status
       redirect_to fines_path
     else
       @payment = Payment.new
-    end
-  end
-
-  def create_json
-    if @fine.payment_status
-      render json: {
-        error: "Fine has been paid already!",
-      }
-    else
-      @payment = Payment.new(payment_params)
-      @payment.fine = @fine
-      if @payment.valid?
-        penalty_check
-        @payment.save
-        render json: {
-          success: "Payment added successfully!"
-        }
-      else
-        render json: { error: "Validation failed for payment", messages: @payment.errors.full_messages }
-      end
-    end
-  end
-
-  def create
-    if @fine.payment_status
-      redirect_to fines_path
-    else
-      @payment = Payment.new(payment_params)
-      @payment.fine = @fine
-      if @payment.valid?
-        penalty_check
-        @payment.save
-        flash[:notice] = "Payment added successfully!"
-        redirect_to fines_path
-      else
-        flash[:error] = "Payment could not be added!"
-        render :new
-      end
     end
   end
 
@@ -74,5 +37,41 @@ class PaymentsController < ApplicationController
 
   def calculate_interest(interest, amount, days)
     amount * (1.0 + (interest / 100.00)) ** days
+  end
+
+  def pay
+    respond_to do |format|
+      if @fine.payment_status
+        format.html {
+          flash[:error] = "Fine has been paid already!"
+          redirect_to fines_path
+        }
+        format.json {
+          render json: { error: "Fine has been paid already!" }
+        }
+      else
+        @payment = Payment.new(payment_params)
+        @payment.fine = @fine
+        if @payment.valid?
+          penalty_check
+          @payment.save
+          format.html {
+            flash[:notice] = "Payment added successfully!"
+            redirect_to fines_path
+          }
+          format.json {
+            render json: { success: "Payment added successfully!" }
+          }
+        else
+          format.html {
+            flash[:error] = "Payment could not be added!"
+            render :new
+          }
+          format.json {
+            render json: { error: "Validation failed for payment", messages: @payment.errors.full_messages }
+          }
+        end
+      end
+    end
   end
 end

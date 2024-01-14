@@ -9,8 +9,10 @@ class RegistrationsController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       @current_user = current_user
-      redirect_to signup_path, notice:"Successfully registered account"
+      flash[:notice] = "User registered successfully!"
+      redirect_to login_path
     else
+      flash[:notice] = "User could not be registered!"
       render :new
     end
   end

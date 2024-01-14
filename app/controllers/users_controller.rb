@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :login_required
+  before_action :login_required, only: [:show, :edit, :update]
+  before_action :individual_required, only: [:vehicles, :fines]
   before_action :user, only: [:show, :edit, :update, :vehicles, :fines, :check_user]
 
   def show
@@ -14,9 +15,10 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(update_user_params)
-      redirect_to user_path(@user), :notice => "User information has been updated."
+      flash[:notice] = "User profile has been updated successfully!"
+      redirect_to user_path(@user)
     else
-      #flash[:alert] = "User information could not be updated: " + @user.errors.full_messages.join(",")
+      flash[:alert] = "User profile could not be updated!"
       render :edit
     end
   end
