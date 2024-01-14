@@ -1,24 +1,12 @@
-# README
+# Traffic Saas application
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is the repository for the Engineering Advanced Web Applications Coursework.
 
-Things you may want to cover:
+## Software versions are as below:
+* Ruby version: 3.30
+* Rails version: 7.1.2
+* Node version: 20.10.0
+* Database version: PostgreSQL 15
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+The link for the deployed version could be found here: https://saas-traffic-app-production.onrender.com/
+The coursework documentation file could be found here: [Documentation](Indrit_Caca_Traffic_Application_Documentation.pdf)
