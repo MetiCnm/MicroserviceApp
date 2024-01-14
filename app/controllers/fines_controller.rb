@@ -54,6 +54,8 @@ class FinesController < ApplicationController
   end
 
   def update
+    @fine.vehicle = @vehicle
+    @fine.user = @vehicle.user
     if @fine.update(fine_params)
       flash[:notice] = "Fine updated successfully!"
       redirect_to fines_path
