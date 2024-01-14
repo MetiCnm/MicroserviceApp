@@ -1,6 +1,6 @@
 class PaymentsController < ApplicationController
   before_action :fine, only: [:new, :penalty_check, :pay]
-  before_action :individual_required, only: [:new, :pay]
+  before_action :individual_required, only: [:new]
   skip_before_action :verify_authenticity_token, only: [:pay]
   def new
     @title = "Pay Fine"
@@ -40,11 +40,22 @@ class PaymentsController < ApplicationController
   end
 
   def pay
+    if logged_in?
+      @current_user = current_user
+      @current_user_role = @current_user.role
+    else
+      @current_user = nil
+      @current_user_role = nil
+    end
     respond_to do |format|
       if @fine.payment_status
         format.html {
-          flash[:error] = "Fine has been paid already!"
-          redirect_to fines_path
+          if @current_user_role == "Individual"
+            flash[:error] = "Fine has been paid already!"
+            redirect_to fines_path
+          else
+            redirect_to root_path
+          end
         }
         format.json {
           render json: { error: "Fine has been paid already!" }
@@ -56,16 +67,24 @@ class PaymentsController < ApplicationController
           penalty_check
           @payment.save
           format.html {
-            flash[:notice] = "Payment added successfully!"
-            redirect_to fines_path
+            if @current_user_role == "Individual"
+              flash[:notice] = "Payment added successfully!"
+              redirect_to fines_path
+            else
+              redirect_to root_path
+            end
           }
           format.json {
             render json: { success: "Payment added successfully!" }
           }
         else
           format.html {
-            flash[:error] = "Payment could not be added!"
-            render :new
+            if @current_user_role == "Individual"
+              flash[:error] = "Payment could not be added!"
+              render :new
+            else
+              redirect_to root_path
+            end
           }
           format.json {
             render json: { error: "Validation failed for payment", messages: @payment.errors.full_messages }
