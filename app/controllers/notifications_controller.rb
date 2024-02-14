@@ -1,10 +1,44 @@
+require 'time'
 class NotificationsController < ApplicationController
+  include HTTParty
   before_action :administrator_required, only: [:index, :show, :edit, :new]
-  before_action :notification, only: [:show, :edit, :update, :destroy, :publish]
+  before_action :notification, only: [:edit, :update, :destroy, :publish]
+  before_action :get_notifications_json, only: [:index, :main]
+  before_action :get_notification_json, only: [:show]
+
+  def get_notifications_json
+    url = "http://localhost:5141/api/Notification"
+    response = HTTParty.get(url).parsed_response
+    @notifications = []
+    response.each do |notification|
+      notifications_params = {
+        subject: notification["subject"],
+        body: notification["body"],
+        published: notification["published"],
+        created_at: notification["createdAt"],
+        updated_at: notification["modifiedAt"]
+      }
+      received_notification = Notification.new(notifications_params)
+      received_notification.id = notification["notificationId"]
+      @notifications << received_notification
+    end
+  end
+
+  def get_notification_json
+    url = "http://localhost:5141/api/Notification/" + params[:id].to_s
+    response = HTTParty.get(url).parsed_response
+    notifications_params = {
+      subject: response["subject"],
+      body: response["body"],
+      published: response["published"],
+      created_at: response["createdAt"],
+      updated_at: response["modifiedAt"]
+    }
+    @notification = Notification.new(notifications_params)
+  end
 
   def index
     @title = "Notifications List"
-    @notifications = Notification.all
     respond_to do |format|
       format.html { }
       format.json {
@@ -35,8 +69,19 @@ class NotificationsController < ApplicationController
   end
 
   def create
+    url = "http://localhost:5141/api/Notification"
+    notification_subject = notification_params[:subject]
+    notification_body = notification_params[:body]
     @notification = Notification.new(notification_params)
-    if @notification.save
+    if @notification.valid?
+      puts "Notification is valid"
+      HTTParty.post(url, body: {
+        subject: notification_subject,
+        body: notification_body,
+        published: false,
+        created_at: Time.now.iso8601,
+        modified_at: Time.now.iso8601,
+      })
       flash[:notice] = "Notification added successfully!"
       redirect_to notifications_path
     else
@@ -77,7 +122,9 @@ class NotificationsController < ApplicationController
 
   def main
     @title = "Main Page"
-    @main_notifications = Notification.where(:published => true).order(created_at: :desc)
+    @main_notifications = @notifications.select {
+      |notification| notification["published"] == true }
+    @main_notifications.sort { |a, b| a["created_at"] <=> b["created_at"] }
   end
 
   def notification_params

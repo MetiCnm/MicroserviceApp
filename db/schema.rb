@@ -20,7 +20,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_02_181122) do
     t.datetime "issue_time", null: false
     t.float "amount", null: false
     t.boolean "payment_status", default: false
-    t.float "penalty_amount"
+    t.float "penalty_amount", default: 0.0
     t.bigint "user_id"
     t.bigint "vehicle_id"
     t.datetime "created_at", null: false
