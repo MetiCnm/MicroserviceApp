@@ -75,13 +75,20 @@ class NotificationsController < ApplicationController
     @notification = Notification.new(notification_params)
     if @notification.valid?
       puts "Notification is valid"
-      HTTParty.post(url, body: {
-        subject: notification_subject,
-        body: notification_body,
-        published: false,
-        created_at: Time.now.iso8601,
-        modified_at: Time.now.iso8601,
-      })
+      puts notification_subject
+      puts notification_body
+      request = HTTParty.post(url,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: {
+          subject: notification_subject,
+          body: notification_body,
+          published: false,
+          createdat: Time.now.iso8601,
+          modifiedat: Time.now.iso8601,
+        }.to_json)
+      puts request.body
       flash[:notice] = "Notification added successfully!"
       redirect_to notifications_path
     else
