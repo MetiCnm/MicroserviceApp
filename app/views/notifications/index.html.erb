@@ -15,7 +15,7 @@
         <tr>
           <td><%= index + 1 %></td>
           <td><%= notification.subject %></td>
-          <td><%= time_ago_in_words(notification.created_at) %> ago</td>
+          <td><%= time_ago_in_words(notification.created_at - 1.hours) %> ago</td>
           <td>
             <div class="d-flex align-items-end">
               <%= render partial: "shared/crud_buttons",

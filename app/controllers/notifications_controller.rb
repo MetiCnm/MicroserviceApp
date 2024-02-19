@@ -2,9 +2,9 @@ require 'time'
 class NotificationsController < ApplicationController
   include HTTParty
   before_action :administrator_required, only: [:index, :show, :edit, :new]
-  before_action :notification, only: [:edit, :update, :destroy, :publish]
+  before_action :notification, only: [:publish]
   before_action :get_notifications_json, only: [:index, :main]
-  before_action :get_notification_json, only: [:show]
+  before_action :get_notification_json, only: [:show, :edit, :update, :destroy]
 
   def get_notifications_json
     url = "http://localhost:5141/api/Notification"
@@ -28,6 +28,7 @@ class NotificationsController < ApplicationController
     url = "http://localhost:5141/api/Notification/" + params[:id].to_s
     response = HTTParty.get(url).parsed_response
     notifications_params = {
+      id: response["notificationId"],
       subject: response["subject"],
       body: response["body"],
       published: response["published"],
@@ -74,9 +75,6 @@ class NotificationsController < ApplicationController
     notification_body = notification_params[:body]
     @notification = Notification.new(notification_params)
     if @notification.valid?
-      puts "Notification is valid"
-      puts notification_subject
-      puts notification_body
       request = HTTParty.post(url,
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +86,6 @@ class NotificationsController < ApplicationController
           createdat: Time.now.iso8601,
           modifiedat: Time.now.iso8601,
         }.to_json)
-      puts request.body
       flash[:notice] = "Notification added successfully!"
       redirect_to notifications_path
     else
@@ -102,7 +99,21 @@ class NotificationsController < ApplicationController
   end
 
   def update
-    if @notification.update(notification_params)
+    url = "http://localhost:5141/api/Notification"
+    notification_subject = notification_params[:subject]
+    notification_body = notification_params[:body]
+    @notification.subject = notification_subject
+    @notification.body = notification_body
+    if @notification.valid?
+      request = HTTParty.put(url,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: {
+          notificationid: @notification.id,
+          subject: @notification.subject,
+          body: @notification.body,
+        }.to_json)
       flash[:notice] = "Notification updated successfully!"
       redirect_to notifications_path
     else
@@ -112,6 +123,8 @@ class NotificationsController < ApplicationController
   end
 
   def destroy
+    url = "http://localhost:5141/api/Notification" + params[:id].to_s
+    response = HTTParty.delete(url)
     if @notification.destroy
       flash[:notice] = "Notification deleted successfully!"
       redirect_to notifications_path
