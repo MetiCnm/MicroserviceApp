@@ -2,9 +2,8 @@ require 'time'
 class NotificationsController < ApplicationController
   include HTTParty
   before_action :administrator_required, only: [:index, :show, :edit, :new]
-  before_action :notification, only: [:publish]
   before_action :get_notifications_json, only: [:index, :main]
-  before_action :get_notification_json, only: [:show, :edit, :update, :destroy]
+  before_action :get_notification_json, only: [:show, :edit, :update, :destroy, :publish]
 
   def get_notifications_json
     url = "http://localhost:5141/api/Notification"
@@ -113,6 +112,9 @@ class NotificationsController < ApplicationController
           notificationid: @notification.id,
           subject: @notification.subject,
           body: @notification.body,
+          published: @notification.published,
+          createdat: @notification.created_at,
+          modifiedat: @notification.updated_at,
         }.to_json)
       flash[:notice] = "Notification updated successfully!"
       redirect_to notifications_path
@@ -123,9 +125,9 @@ class NotificationsController < ApplicationController
   end
 
   def destroy
-    url = "http://localhost:5141/api/Notification" + params[:id].to_s
+    url = "http://localhost:5141/api/Notification/" + params[:id].to_s
     response = HTTParty.delete(url)
-    if @notification.destroy
+    if response.code == 200
       flash[:notice] = "Notification deleted successfully!"
       redirect_to notifications_path
     else
@@ -135,23 +137,24 @@ class NotificationsController < ApplicationController
   end
 
   def publish
-    @notification.update_attribute(:published, true)
-    flash[:notice] = "Notification published successfully!"
-    redirect_to notifications_path
+    url = "http://localhost:5141/api/Notification/#{params[:id].to_s}/publish"
+    response = HTTParty.post(url)
+    if response.code == 200
+      flash[:notice] = "Notification published successfully!"
+      redirect_to notifications_path
+    else
+      flash[:error] = "Notification could not be published!"
+      render :index
+    end
   end
 
   def main
     @title = "Main Page"
-    @main_notifications = @notifications.select {
-      |notification| notification["published"] == true }
+    @main_notifications = @notifications.select { |notification| notification["published"] == true}
     @main_notifications.sort { |a, b| a["created_at"] <=> b["created_at"] }
   end
 
   def notification_params
     params.require(:notification).permit(:subject, :body)
-  end
-
-  def notification
-    @notification = Notification.find(params[:id])
   end
 end

@@ -1,14 +1,64 @@
+require 'time'
 class VehiclesController < ApplicationController
+  include HTTParty
   before_action :vehicle, only: [:show, :edit, :update, :destroy]
   before_action :vehicle_user, only: [:create, :update]
   before_action :administrator_required, only: [:index, :show, :edit, :new]
+
+  def get_vehicles_json
+    url = "http://localhost:3001/vehicles"
+    response = HTTParty.get(url).parsed_response
+    @vehicles = []
+    response.each do |vehicle|
+      vehicle_params = {
+        plate_number: vehicle["plate_number"],
+        vehicle_type: vehicle["vehicle_type"],
+        make: vehicle["make"],
+        user_id: vehicle["user_id"],
+      }
+      received_vehicle = Vehicle.new(vehicle_params)
+      received_vehicle.id = vehicle["id"]
+      @vehicles << received_vehicle
+    end
+  end
+
+  def get_vehicle_json
+    url = "http://localhost:3001/vehicles" + params[:id].to_s
+    response = HTTParty.get(url).parsed_response
+    notifications_params = {
+      id: response["id"],
+      plate_number: response["plate_number"],
+      vehicle_type: response["vehicle_type"],
+      make: response["make"],
+      user_id: response["user_id"]
+    }
+    @vehicle = Notification.new(notifications_params)
+  end
+
   def index
     @title = "Vehicles List"
-    @vehicles = Vehicle.all
+    respond_to do |format|
+      format.html { }
+      format.json {
+        render json: @notifications
+      }
+      format.xml {
+        render xml: @notifications
+      }
+    end
   end
 
   def show
     @title = "Show Vehicle"
+    respond_to do |format|
+      format.html { }
+      format.json {
+        render json: @notification
+      }
+      format.xml {
+        render xml: @notification
+      }
+    end
   end
 
   def new
@@ -17,9 +67,26 @@ class VehiclesController < ApplicationController
   end
 
   def create
+    url = "http://localhost:3001/vehicles"
+    vehicle_plate_number = vehicle_params[:plate_number]
+    vehicle_type = vehicle_params[:vehicle_type]
+    vehicle_make = vehicle_params[:make]
+    vehicle_production_year = vehicle_params[:production_year]
+    vehicle_user_id = vehicle_params[:user_id]
     @vehicle = Vehicle.new(vehicle_params)
-    @vehicle.user = @user
-    if @vehicle.save
+    if @vehicle.valid?
+      request = HTTParty.post(url,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: {
+          plate_number: vehicle_plate_number,
+          type: vehicle_type,
+          make: vehicle_make,
+          production_year: vehicle_production_year,
+          user_id: vehicle_user_id
+        }
+      )
       flash[:notice] = "Vehicle added successfully!"
       redirect_to vehicles_path
     else
