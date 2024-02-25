@@ -21,7 +21,7 @@ default: &default
 
 development:
   <<: *default
-  database: saas_traffic_app_development
+  database: microservice_app_development
   host: 127.0.0.1
   username: indriti
   password: indriti123
@@ -58,7 +58,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: saas_traffic_app_test
+  database: microservice_app_test
   host: 127.0.0.1
   username: indriti
   password: indriti123
@@ -85,7 +85,7 @@ test:
 #
 production:
   <<: *default
-  database: saas_traffic_app_production
+  database: microservice_app_production
   host: 127.0.0.1
   username: indriti
   password: indriti123

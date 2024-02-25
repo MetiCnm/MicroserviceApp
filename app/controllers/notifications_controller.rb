@@ -6,7 +6,7 @@ class NotificationsController < ApplicationController
   before_action :get_notification_json, only: [:show, :edit, :update, :destroy, :publish]
 
   def get_notifications_json
-    url = "http://localhost:5141/api/Notification"
+    url = "http://localhost:5289/api/Notification"
     response = HTTParty.get(url).parsed_response
     @notifications = []
     response.each do |notification|
@@ -24,7 +24,7 @@ class NotificationsController < ApplicationController
   end
 
   def get_notification_json
-    url = "http://localhost:5141/api/Notification/" + params[:id].to_s
+    url = "http://localhost:5289/api/Notification/" + params[:id].to_s
     response = HTTParty.get(url).parsed_response
     notifications_params = {
       id: response["notificationId"],

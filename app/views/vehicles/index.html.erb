@@ -18,7 +18,7 @@
         <tr>
           <td><%= index + 1 %></td>
           <td><%= vehicle.plate_number %></td>
-          <td><%= vehicle.user.name + " " + vehicle.user.surname %></td>
+          <td><%= User.where(id: vehicle.user_id).all.map{|user| user.name + " " + user.surname }.join(" ") %></td>
           <td><%= vehicle.vehicle_type %></td>
           <td><%= vehicle.make %></td>
           <td><%= vehicle.production_year %></td>

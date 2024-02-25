@@ -1,8 +1,9 @@
 require 'time'
 class VehiclesController < ApplicationController
   include HTTParty
-  before_action :vehicle, only: [:show, :edit, :update, :destroy]
   before_action :vehicle_user, only: [:create, :update]
+  before_action :get_vehicles_json, only: [:index]
+  before_action :get_vehicle_json, only: [:show, :edit, :update, :destroy]
   before_action :administrator_required, only: [:index, :show, :edit, :new]
 
   def get_vehicles_json
@@ -14,6 +15,7 @@ class VehiclesController < ApplicationController
         plate_number: vehicle["plate_number"],
         vehicle_type: vehicle["vehicle_type"],
         make: vehicle["make"],
+        production_year: vehicle["production_year"],
         user_id: vehicle["user_id"],
       }
       received_vehicle = Vehicle.new(vehicle_params)
@@ -23,16 +25,18 @@ class VehiclesController < ApplicationController
   end
 
   def get_vehicle_json
-    url = "http://localhost:3001/vehicles" + params[:id].to_s
+    url = "http://localhost:3001/vehicles/" + params[:id].to_s
     response = HTTParty.get(url).parsed_response
-    notifications_params = {
+    vehicle_params = {
       id: response["id"],
       plate_number: response["plate_number"],
       vehicle_type: response["vehicle_type"],
       make: response["make"],
+      production_year: response["production_year"],
       user_id: response["user_id"]
     }
-    @vehicle = Notification.new(notifications_params)
+    puts vehicle_params
+    @vehicle = Vehicle.new(vehicle_params)
   end
 
   def index
@@ -40,23 +44,25 @@ class VehiclesController < ApplicationController
     respond_to do |format|
       format.html { }
       format.json {
-        render json: @notifications
+        render json: @vehicles
       }
       format.xml {
-        render xml: @notifications
+        render xml: @vehicles
       }
     end
   end
 
   def show
     @title = "Show Vehicle"
+    @vehicle_user = User.find_by(id: @vehicle.user_id)
     respond_to do |format|
-      format.html { }
+      format.html {
+      }
       format.json {
-        render json: @notification
+        render json: @vehicle
       }
       format.xml {
-        render xml: @notification
+        render xml: @vehicle
       }
     end
   end
@@ -81,12 +87,11 @@ class VehiclesController < ApplicationController
         },
         body: {
           plate_number: vehicle_plate_number,
-          type: vehicle_type,
+          vehicle_type: vehicle_type,
           make: vehicle_make,
           production_year: vehicle_production_year,
           user_id: vehicle_user_id
-        }
-      )
+        }.to_json)
       flash[:notice] = "Vehicle added successfully!"
       redirect_to vehicles_path
     else
@@ -100,18 +105,43 @@ class VehiclesController < ApplicationController
   end
 
   def update
-    @vehicle.user = @user
-    if @vehicle.update(vehicle_params)
+    url = "http://localhost:3001/vehicles/" + params[:id].to_s
+    vehicle_plate_number = vehicle_params[:plate_number]
+    vehicle_type = vehicle_params[:vehicle_type]
+    vehicle_make = vehicle_params[:make]
+    vehicle_production_year = vehicle_params[:production_year]
+    vehicle_user_id = vehicle_params[:user_id]
+    @vehicle.plate_number = vehicle_plate_number
+    @vehicle.vehicle_type = vehicle_type
+    @vehicle.make = vehicle_make
+    @vehicle.production_year = vehicle_production_year
+    @vehicle.user_id = vehicle_user_id
+    if @vehicle.valid?
+      puts "Vehicle valid"
+      request = HTTParty.put(url,
+        headers: {
+          "Content-Type": "application/json",
+          },
+        body: {
+          plate_number: @vehicle.plate_number,
+          vehicle_type: @vehicle.vehicle_type,
+          make: @vehicle.make,
+          production_year: @vehicle.production_year,
+          user_id: @vehicle.user_id
+        }.to_json)
       flash[:notice] = "Vehicle updated successfully!"
       redirect_to vehicles_path
     else
+      puts "Vehicle not valid"
       flash[:error] = "Vehicle could not be updated"
       render :edit
     end
   end
 
   def destroy
-    if @vehicle.destroy
+    url = "http://localhost:3001/vehicles/" + params[:id].to_s
+    response = HTTParty.delete(url)
+    if response.code == 200
       flash[:notice] = "Vehicle deleted successfully!"
       redirect_to vehicles_path
     else
@@ -121,7 +151,7 @@ class VehiclesController < ApplicationController
   end
 
   def vehicle_params
-    params.require(:vehicle).permit(:plate_number, :vehicle_type, :make, :production_year)
+    params.require(:vehicle).permit(:plate_number, :vehicle_type, :make, :production_year, :user_id)
   end
 
   def vehicle_user_param

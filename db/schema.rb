@@ -33,8 +33,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_02_181122) do
     t.string "subject", null: false
     t.string "body", null: false
     t.boolean "published", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -67,9 +67,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_02_181122) do
     t.string "make"
     t.integer "production_year"
     t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_vehicles_on_user_id"
+    t.datetime "created_at"
+    t.datetime "modified_at"
   end
 
 end

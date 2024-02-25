@@ -5,8 +5,9 @@ class CreateVehicles < ActiveRecord::Migration[7.1]
       t.string :vehicle_type
       t.string :make
       t.integer :production_year
-      t.references :user
-      t.timestamps
+      t.bigint :user_id
+      t.datetime :created_at
+      t.datetime :modified_at
     end
   end
 end
