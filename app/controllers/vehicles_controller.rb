@@ -82,16 +82,16 @@ class VehiclesController < ApplicationController
     @vehicle = Vehicle.new(vehicle_params)
     if @vehicle.valid?
       request = HTTParty.post(url,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: {
-          plate_number: vehicle_plate_number,
-          vehicle_type: vehicle_type,
-          make: vehicle_make,
-          production_year: vehicle_production_year,
-          user_id: vehicle_user_id
-        }.to_json)
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                              body: {
+                                plate_number: vehicle_plate_number,
+                                vehicle_type: vehicle_type,
+                                make: vehicle_make,
+                                production_year: vehicle_production_year,
+                                user_id: vehicle_user_id
+                              }.to_json)
       flash[:notice] = "Vehicle added successfully!"
       redirect_to vehicles_path
     else
@@ -119,16 +119,16 @@ class VehiclesController < ApplicationController
     if @vehicle.valid?
       puts "Vehicle valid"
       request = HTTParty.put(url,
-        headers: {
-          "Content-Type": "application/json",
-          },
-        body: {
-          plate_number: @vehicle.plate_number,
-          vehicle_type: @vehicle.vehicle_type,
-          make: @vehicle.make,
-          production_year: @vehicle.production_year,
-          user_id: @vehicle.user_id
-        }.to_json)
+                             headers: {
+                               "Content-Type": "application/json",
+                             },
+                             body: {
+                               plate_number: @vehicle.plate_number,
+                               vehicle_type: @vehicle.vehicle_type,
+                               make: @vehicle.make,
+                               production_year: @vehicle.production_year,
+                               user_id: @vehicle.user_id
+                             }.to_json)
       flash[:notice] = "Vehicle updated successfully!"
       redirect_to vehicles_path
     else
@@ -166,4 +166,3 @@ class VehiclesController < ApplicationController
     @vehicle = Vehicle.find(params[:id])
   end
 end
-

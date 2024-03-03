@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   resources :vehicles
 
   # Fine routes
-  resources :fines do
+  resources :fines, param: :_id do
     get 'payment', on: :member, to: 'payments#new'
     post 'payment', on: :member, to: 'payments#pay'
   end

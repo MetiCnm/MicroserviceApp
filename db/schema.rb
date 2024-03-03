@@ -15,18 +15,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_02_181122) do
   enable_extension "plpgsql"
 
   create_table "fines", force: :cascade do |t|
+    t.string "_id", null: false
     t.string "reason", null: false
     t.string "place", null: false
     t.datetime "issue_time", null: false
     t.float "amount", null: false
     t.boolean "payment_status", default: false
     t.float "penalty_amount", default: 0.0
-    t.bigint "user_id"
-    t.bigint "vehicle_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_fines_on_user_id"
-    t.index ["vehicle_id"], name: "index_fines_on_vehicle_id"
+    t.bigint "user_id", null: false
+    t.bigint "vehicle_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string "vehicle_plate_number"
+    t.string "user_name"
+    t.string "user_surname"
   end
 
   create_table "notifications", force: :cascade do |t|

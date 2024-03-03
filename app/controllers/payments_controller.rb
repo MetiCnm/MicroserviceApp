@@ -1,5 +1,5 @@
 class PaymentsController < ApplicationController
-  before_action :fine, only: [:new, :penalty_check, :pay]
+  before_action :response, only: [:new, :penalty_check, :pay]
   before_action :individual_required, only: [:new]
   skip_before_action :verify_authenticity_token, only: [:pay]
   def new

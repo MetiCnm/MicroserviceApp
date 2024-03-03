@@ -5,7 +5,7 @@ class CreatePayments < ActiveRecord::Migration[7.1]
       t.string :expiration_date, null: false
       t.string :card_verification_number, null: false
       t.float :amount, default: 0.00
-      t.references :fine
+      t.references :response
       t.timestamps
     end
   end

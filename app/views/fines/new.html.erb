@@ -20,8 +20,8 @@
         <%= text_field :fine, :amount, :class => 'form-control'%>
       </div>
       <div class="mb-3 d-block w-100">
-        <%= label :fine, :vehicle_id, 'Vehicle', :class => 'form-label' %>
-        <%= select :fine, :vehicle_id, Vehicle.includes(:user).where(users: {role: "Individual"}).map{|vehicle| [vehicle.plate_number + " - " + vehicle.user.name + " " + vehicle.user.surname, vehicle.id]}, {}, { :class => 'form-control d-block w-100' }%>
+        <%= label :fine, :vehicle_id, 'User', :class => 'form-label' %>
+        <%= select :fine, :vehicle_id, @vehicle_list.map{|vehicle| [vehicle[:text], vehicle[:id]]}, {}, { :class => 'form-control d-block w-100' }%>
       </div>
       <div class="d-flex justify-content-center">
         <%= submit_tag 'Add', :class => 'btn btn-primary' %>
