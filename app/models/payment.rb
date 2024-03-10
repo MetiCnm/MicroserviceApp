@@ -6,7 +6,6 @@ class Payment < ApplicationRecord
   validate :expiration_date_check
   validates :card_verification_number, presence: { message: "not inserted" }
   validate :card_verification_number_check
-  belongs_to :fine
 
   def credit_card_number_check
     if credit_card_number.present?

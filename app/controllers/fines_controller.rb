@@ -6,7 +6,7 @@ class FinesController < ApplicationController
   before_action :get_fine_json, only: [:show, :edit, :update, :destroy]
 
   def get_fines_json
-    url = "http://localhost:4000/fines"
+    url = "https://finesapi.onrender.com/fines"
     response = HTTParty.get(url).parsed_response
     @fines = []
     response.each do |fine|
@@ -23,7 +23,7 @@ class FinesController < ApplicationController
         updated_at: fine["updated_at"]
       }
       fine_user = User.find_by(id: fine["user_id"])
-      vehicle_url_response = HTTParty.get("http://localhost:3001/vehicles/#{fine["vehicle_id"]}").parsed_response
+      vehicle_url_response = HTTParty.get("https://vehicle-api-webapp.onrender.com/vehicles/#{fine["vehicle_id"]}").parsed_response
       received_fine = Fine.new(fine_params)
       received_fine._id = fine["_id"]
       received_fine.user_name = fine_user.name
@@ -34,7 +34,7 @@ class FinesController < ApplicationController
   end
 
   def get_fine_json
-    url = "http://localhost:4000/fines/" + params[:_id].to_s
+    url = "https://finesapi.onrender.com/fines/" + params[:_id].to_s
     response = HTTParty.get(url).parsed_response
     fine_params = {
       reason: response["reason"],
@@ -50,7 +50,7 @@ class FinesController < ApplicationController
     }
     puts fine_params
     fine_user = User.find_by(id: response["user_id"])
-    vehicle_url_response = HTTParty.get("http://localhost:3001/vehicles/#{response["vehicle_id"]}").parsed_response
+    vehicle_url_response = HTTParty.get("https://vehicle-api-webapp.onrender.com/vehicles/#{response["vehicle_id"]}").parsed_response
     @fine = Fine.new(fine_params)
     @fine._id = response["_id"]
     @fine.user_name = fine_user.name
@@ -85,7 +85,7 @@ class FinesController < ApplicationController
   end
 
   def new
-    vehicle_response = HTTParty.get("http://localhost:3001/vehicles").parsed_response
+    vehicle_response = HTTParty.get("https://vehicle-api-webapp.onrender.com/vehicles").parsed_response
     vehicle_response_count = vehicle_response.count
     @vehicle_list = []
     if vehicle_response_count == 0
@@ -109,7 +109,7 @@ class FinesController < ApplicationController
   end
 
   def create
-    url = "http://localhost:4000/fines"
+    url = "https://finesapi.onrender.com/fines"
     fine_reason = fine_params[:reason]
     fine_place = fine_params[:place]
     fine_issue_time = (DateTime.new(fine_params["issue_time(1i)"].to_i,
@@ -140,7 +140,7 @@ class FinesController < ApplicationController
       redirect_to fines_path
     else
       @vehicle_list = []
-      vehicle_response = HTTParty.get("http://localhost:3001/vehicles").parsed_response
+      vehicle_response = HTTParty.get("https://vehicle-api-webapp.onrender.com/vehicles").parsed_response
       individual_users = User.where(role: 'Individual').ids
       vehicle_response.each do |vehicle|
         if individual_users.include? vehicle["user_id"]
@@ -158,7 +158,7 @@ class FinesController < ApplicationController
   end
 
   def edit
-    vehicle_response = HTTParty.get("http://localhost:3001/vehicles").parsed_response
+    vehicle_response = HTTParty.get("https://vehicle-api-webapp.onrender.com/vehicles").parsed_response
     vehicle_response_count = vehicle_response.count
     @vehicle_list = []
     if vehicle_response_count == 0
@@ -183,7 +183,7 @@ class FinesController < ApplicationController
   end
 
   def update
-    url = "http://localhost:4000/fines/" + params[:_id].to_s
+    url = "https://finesapi.onrender.com/fines/" + params[:_id].to_s
     fine_reason = fine_params[:reason]
     fine_place = fine_params[:place]
     fine_issue_time = (DateTime.new(fine_params["issue_time(1i)"].to_i,
@@ -217,7 +217,7 @@ class FinesController < ApplicationController
     else
       puts "Error fine _id: " + @fine._id
       @vehicle_list = []
-      vehicle_response = HTTParty.get("http://localhost:3001/vehicles").parsed_response
+      vehicle_response = HTTParty.get("https://vehicle-api-webapp.onrender.com/vehicles").parsed_response
       individual_users = User.where(role: 'Individual').ids
       vehicle_response.each do |vehicle|
         if individual_users.include? vehicle["user_id"]
@@ -235,7 +235,7 @@ class FinesController < ApplicationController
   end
 
   def destroy
-    url = "http://localhost:4000/fines/" + @fine._id
+    url = "https://finesapi.onrender.com/fines/" + @fine._id
     response = HTTParty.delete(url)
     puts response.code
     if response.code == 200

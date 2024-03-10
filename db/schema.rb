@@ -44,10 +44,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_02_181122) do
     t.string "expiration_date", null: false
     t.string "card_verification_number", null: false
     t.float "amount", default: 0.0
-    t.bigint "fine_id"
+    t.string "fine_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["fine_id"], name: "index_payments_on_fine_id"
   end
 
   create_table "users", force: :cascade do |t|

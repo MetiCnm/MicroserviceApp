@@ -17,7 +17,7 @@
       <% @fines.each_with_index do |fine, index| %>
         <tr>
           <td><%= index + 1 %></td>
-          <td><%= fine.vehicle.plate_number %></td>
+          <td><%= fine.vehicle_plate_number %></td>
           <td><%= fine.reason %></td>
           <td><%= fine.place %></td>
           <td><%= fine.issue_time.strftime("%d/%m/%Y %H:%M") %></td>
@@ -26,7 +26,7 @@
             <% if fine.payment_status %>
               <span class="text-success ms-2">Paid</span>
             <% else %>
-              <%= button_to "Pay", payment_fine_path(fine), method: :get, :class => 'btn btn-success' %>
+              <%= button_to "Pay", payment_fine_path(fine._id), method: :get, :class => 'btn btn-success' %>
             <% end %>
           </td>
         </tr>

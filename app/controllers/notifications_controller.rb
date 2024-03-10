@@ -6,8 +6,9 @@ class NotificationsController < ApplicationController
   before_action :get_notification_json, only: [:show, :edit, :update, :destroy, :publish]
 
   def get_notifications_json
-    url = "http://localhost:5289/api/Notification"
-    response = HTTParty.get(url).parsed_response
+    auth = {username: '11166769', password: '60-dayfreetrial'}
+    url = "http://indritcaca-001-site1.ftempurl.com/api/Notification"
+    response = HTTParty.get(url, basic_auth: auth).parsed_response
     @notifications = []
     response.each do |notification|
       notifications_params = {
@@ -24,8 +25,9 @@ class NotificationsController < ApplicationController
   end
 
   def get_notification_json
-    url = "http://localhost:5289/api/Notification/" + params[:id].to_s
-    response = HTTParty.get(url).parsed_response
+    auth = {username: '11166769', password: '60-dayfreetrial'}
+    url = "http://indritcaca-001-site1.ftempurl.com/api/Notification/" + params[:id].to_s
+    response = HTTParty.get(url, basic_auth: auth).parsed_response
     notifications_params = {
       id: response["notificationId"],
       subject: response["subject"],
@@ -69,12 +71,14 @@ class NotificationsController < ApplicationController
   end
 
   def create
-    url = "http://localhost:5141/api/Notification"
+    auth = {username: '11166769', password: '60-dayfreetrial'}
+    url = "http://indritcaca-001-site1.ftempurl.com/api/Notification"
     notification_subject = notification_params[:subject]
     notification_body = notification_params[:body]
     @notification = Notification.new(notification_params)
     if @notification.valid?
       request = HTTParty.post(url,
+        basic_auth: auth,
         headers: {
           "Content-Type": "application/json",
         },
@@ -98,13 +102,15 @@ class NotificationsController < ApplicationController
   end
 
   def update
-    url = "http://localhost:5141/api/Notification"
+    auth = {username: '11166769', password: '60-dayfreetrial'}
+    url = "http://indritcaca-001-site1.ftempurl.com/api/Notification"
     notification_subject = notification_params[:subject]
     notification_body = notification_params[:body]
     @notification.subject = notification_subject
     @notification.body = notification_body
     if @notification.valid?
       request = HTTParty.put(url,
+        basic_auth: auth,
         headers: {
           "Content-Type": "application/json",
         },
@@ -125,8 +131,9 @@ class NotificationsController < ApplicationController
   end
 
   def destroy
-    url = "http://localhost:5141/api/Notification/" + params[:id].to_s
-    response = HTTParty.delete(url)
+    auth = {username: '11166769', password: '60-dayfreetrial'}
+    url = "http://indritcaca-001-site1.ftempurl.com/api/Notification/" + params[:id].to_s
+    response = HTTParty.delete(url, basic_auth: auth)
     if response.code == 200
       flash[:notice] = "Notification deleted successfully!"
       redirect_to notifications_path
@@ -137,8 +144,10 @@ class NotificationsController < ApplicationController
   end
 
   def publish
-    url = "http://localhost:5141/api/Notification/#{params[:id].to_s}/publish"
-    response = HTTParty.post(url)
+    auth = {username: '11166769', password: '60-dayfreetrial'}
+    url = "http://indritcaca-001-site1.ftempurl.com/api/Notification/#{params[:id].to_s}/publish"
+    response = HTTParty.get(url, basic_auth: auth)
+    puts response
     if response.code == 200
       flash[:notice] = "Notification published successfully!"
       redirect_to notifications_path

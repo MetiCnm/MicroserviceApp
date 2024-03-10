@@ -1,12 +1,12 @@
 databases:
-  - name: saas_traffic_app_production
-    databaseName: saas_traffic_app_production
-    user: saas_traffic_app_production_user
+  - name: microservice_webapp
+    databaseName: microservice_webapp
+    user: microservice_webapp
     plan: free
 
 services:
   - type: web
-    name: saas_traffic_app_production
+    name: microservice_webapp
     runtime: ruby
     plan: free
     buildCommand: "./bin/render-build.sh"
@@ -15,7 +15,7 @@ services:
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: saas_traffic_app_production
+          name: microservice_webapp
           property: connectionString
       - key: RAILS_MASTER_KEY
         sync: false

@@ -7,7 +7,7 @@ class VehiclesController < ApplicationController
   before_action :administrator_required, only: [:index, :show, :edit, :new]
 
   def get_vehicles_json
-    url = "http://localhost:3001/vehicles"
+    url = "https://vehicle-api-webapp.onrender.com/vehicles"
     response = HTTParty.get(url).parsed_response
     @vehicles = []
     response.each do |vehicle|
@@ -25,7 +25,7 @@ class VehiclesController < ApplicationController
   end
 
   def get_vehicle_json
-    url = "http://localhost:3001/vehicles/" + params[:id].to_s
+    url = "https://vehicle-api-webapp.onrender.com/vehicles/" + params[:id].to_s
     response = HTTParty.get(url).parsed_response
     vehicle_params = {
       id: response["id"],
@@ -73,7 +73,7 @@ class VehiclesController < ApplicationController
   end
 
   def create
-    url = "http://localhost:3001/vehicles"
+    url = "https://vehicle-api-webapp.onrender.com/vehicles"
     vehicle_plate_number = vehicle_params[:plate_number]
     vehicle_type = vehicle_params[:vehicle_type]
     vehicle_make = vehicle_params[:make]
@@ -105,7 +105,7 @@ class VehiclesController < ApplicationController
   end
 
   def update
-    url = "http://localhost:3001/vehicles/" + params[:id].to_s
+    url = "https://vehicle-api-webapp.onrender.com/vehicles/" + params[:id].to_s
     vehicle_plate_number = vehicle_params[:plate_number]
     vehicle_type = vehicle_params[:vehicle_type]
     vehicle_make = vehicle_params[:make]
@@ -139,7 +139,7 @@ class VehiclesController < ApplicationController
   end
 
   def destroy
-    url = "http://localhost:3001/vehicles/" + params[:id].to_s
+    url = "https://vehicle-api-webapp.onrender.com/vehicles/" + params[:id].to_s
     response = HTTParty.delete(url)
     if response.code == 200
       flash[:notice] = "Vehicle deleted successfully!"
